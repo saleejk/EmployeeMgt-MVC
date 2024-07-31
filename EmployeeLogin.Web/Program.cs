@@ -1,10 +1,19 @@
 using EmployeeLogin.Web.Models;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<IEmployeeServices, EmployeeServices>();
+Log.Logger = new LoggerConfiguration()
+   .MinimumLevel.Information()
+   .WriteTo.Console()
+   .WriteTo.File("logs/All-loger-info-.txt", rollingInterval: RollingInterval.Day)
+   .CreateLogger();
+
+builder.Services.AddSerilog();
+
 
 var app = builder.Build();
 
