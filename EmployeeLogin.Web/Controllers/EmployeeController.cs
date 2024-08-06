@@ -37,20 +37,18 @@ namespace EmployeeLogin.Web.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> LogIn(LoginDto login)
+        public async Task<IActionResult> LogInn(LoginDto login)
         {
-            login.Password = "12345678";
             Log.Error("hello guyzz");
             var employee = await employeeServices.LogIn(login);
-            //if (employee != null)
-            //{
-            return RedirectToAction("LogInn", "Employee");
-            //}
-            //else
-            //{
-            //    return BadRequest();
-            //}
-
+            if (employee != null) {
+                return View();
+            }
+            else
+            {
+                return BadRequest("user not found");
+            }
+            
         }
     }
 }
